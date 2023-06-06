@@ -1,20 +1,30 @@
-const router = require('express').Router()
+const express = require('express');
+const router = express.Router();
+const places = require('../models/places');
 
-router.get('/new', (req, res) => {
-    let places = [{
-        name: 'H-Thai-ML',
-        city: 'Seattle',
-        state: 'WA',
-        cuisines: 'Thai,Pan-Asian',
-        pic: 'https://images.unsplash.com/photo-1685644072593-b0e42d185d03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=338&q=60'
-    },{
-        name: 'Coding Cat Cafe',
-        city: 'Phoenix',
-        state: 'AZ',
-        cuisines: 'Coffee, Bakery',
-        pic: 'https://images.unsplash.com/photo-1684703125974-1140431aad4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=338&q=60'
-    }]
-    res.render('places/new', { places })
-})
+// GET /places/new route
+router.get("/new", (req, res) => {
+  res.render("places/new");
+});
 
-module.exports = router
+router.post('/', (req, res) => {
+  console.log(req.body);
+  if (!req.body.pic) {
+    // Default image if one is not provided
+    req.body.pic = 'http://placekitten.com/400/400';
+  }
+  if (!req.body.city) {
+    req.body.city = 'Anytown';
+  }
+  if (!req.body.state) {
+    req.body.state = 'USA';
+  }
+  places.push(req.body);
+  res.redirect('/places');
+});
+
+router.get("/", (req, res) => {
+  res.render("places/index", { places });
+});
+
+module.exports = router;
