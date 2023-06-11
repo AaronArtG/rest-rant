@@ -7,11 +7,11 @@ function error404 () {
         <Def>
             <main>
                 <h1>404: PAGE NOT FOUND</h1>
-                <p>Oops, sorry, we cant find this page!</p>
+                <p>Oops, sorry, this page seems to be lost in meta-tation.</p>
                 <div>
-      <img src="/images/chakra.webp" alt="cosmic chakra" />
+                   <img src="/images/chakra.webp" alt="cosmic chakra" />
      
-    </div>
+                </div>
             </main>
         </Def>
     )
