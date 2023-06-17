@@ -10,7 +10,6 @@ function error404 () {
                 <p>Oops, sorry, this page seems to be lost in meta-tation.</p>
                 <div>
                    <img src="/images/chakra.webp" alt="cosmic chakra" />
-     
                 </div>
             </main>
         </Def>
