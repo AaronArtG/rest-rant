@@ -5,7 +5,7 @@ const methodOverride = require('method-override')
 const mongoose = require('mongoose')
 
 
-app.set('views', __dirname + '/views')
+// app.set('views', __dirname + '/views')
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
 app.use(methodOverride('_method'))

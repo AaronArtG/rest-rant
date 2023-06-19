@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const places = require('../models/places')
 const db = require('../models')
 
 router.get('/', (req, res) => {
@@ -37,7 +38,7 @@ router.get('/new', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-  db.Place.findById(req.params.id)
+  db.Place.findOne({ _id: req.params.id })
   .populate('comments')
   .then(place => {
     console.log(place.comments)
@@ -51,15 +52,36 @@ router.get('/:id', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-  res.send('PUT /places/:id stub')
+  db.Place.findByIdAndUpdate(req.params.id, req.body)
+  .then(() => {
+    res.redirect(`/places/${req.params.id}`)
+  })
+  .catch(err => {
+    console.log('err', err)
+    res.render('error404')
+  })
 })
 
 router.delete('/:id', (req, res) => {
-  res.send('DELETE /places/:id stub')
+  db.Place.findByIdAndDelete(req.params.id)
+  .then(() => {
+    res.redirect('/places')
+  })
+  .catch(err => {
+    console.log('err', err)
+    res.render('error404')
+  })
 })
 
 router.get('/:id/edit', (req, res) => {
-  res.send('GET edit form stub')
+  db.Place.findOne({ _id: req.params.id })
+  .then(place => {
+    res.render('places/edit')
+  })
+  .catch(err => {
+    console.log('err', err)
+    res.render('error404')
+  })
 })
 
 router.post('/:id/comment', (req, res) => {
@@ -71,14 +93,16 @@ db.Place.findById(req.params.id)
     place.comments.push(comment.id)
     place.save()
     .then(() => {
-      res.redirect(`/places/${place.id}`)
+      res.redirect(`/places/${req.params.id}`)
     })
   })
   .catch(err => {
+    console.log('err', err)
     res.render('error404')
   })
 })
 .catch(err => {
+  console.log('err', err)
   res.render('error404')
 })
 })
