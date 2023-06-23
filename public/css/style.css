@@ -2,7 +2,9 @@ h1 {
   text-align: center;
   color: rgb(33, 139, 119);
 }
-
+h3,h4{
+  font-size: small;
+}
 img {
   width: 75%;
   height: 75%;
